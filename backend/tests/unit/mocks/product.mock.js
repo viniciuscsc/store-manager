@@ -4,4 +4,12 @@ const mockedProducts = [
   { id: 3, name: 'Escudo do Capitão América' },
 ];
 
-module.exports = mockedProducts;
+const mockedNewProduct = {
+  id: 4,
+  name: 'Produto X',
+};
+
+module.exports = {
+  mockedProducts,
+  mockedNewProduct,
+};
