@@ -16,7 +16,7 @@ const getAllSales = async () => {
 };
 
 const getSaleById = async (saleId) => {
-  const [[result]] = await connection.execute(
+  const [result] = await connection.execute(
     `SELECT
       s.date,
       sp.product_id AS productId,

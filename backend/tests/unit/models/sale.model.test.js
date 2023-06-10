@@ -15,7 +15,7 @@ describe('Testes unitários da camada model de "sales"', function () {
   });
 
   it('getSaleById retorna a venda correspondente ao id informado', async function () {
-    sinon.stub(connection, 'execute').resolves([[mockedSales[0]]]);
+    sinon.stub(connection, 'execute').resolves([mockedSales[0]]);
     const result = await saleModel.getSaleById(1);
     expect(result).to.be.deep.equal(mockedSales[0]);
   });
