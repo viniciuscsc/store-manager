@@ -20,9 +20,9 @@ describe('Testes unitários da camada controller de "products"', function () {
   afterEach(function () {
     sinon.restore();
   });
-
+  
   it('getAllProducts retorna todos os produtos cadastrados', async function () {
-    sinon.stub(productService, 'getAllProducts').resolves(mockedProducts);
+    sinon.stub(productService, 'getAllProducts').resolves({ message: mockedProducts });
     await productController.getAllProducts(req, res);
     expect(res.status).to.be.calledWith(200);
     expect(res.json).to.be.calledWithExactly(mockedProducts);
@@ -30,7 +30,7 @@ describe('Testes unitários da camada controller de "products"', function () {
 
   it('getProductById retorna o produto correspondente ao id informado', async function () {
     req.params = { id: 1 };
-    sinon.stub(productService, 'getProductById').resolves(mockedProducts[0]);
+    sinon.stub(productService, 'getProductById').resolves({ message: mockedProducts[0] });
     await productController.getProductById(req, res);
     expect(res.status).to.be.calledWith(200);
     expect(res.json).to.be.calledWithExactly(mockedProducts[0]);
