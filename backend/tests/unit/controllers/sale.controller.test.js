@@ -22,7 +22,7 @@ describe('Testes unitários da camada controller de "sales"', function () {
   });
 
   it('getAllSales retorna todas as vendas cadastradas', async function () {
-    sinon.stub(saleService, 'getAllSales').resolves(mockedSales);
+    sinon.stub(saleService, 'getAllSales').resolves({ message: mockedSales });
     await saleController.getAllSales(req, res);
     expect(res.status).to.be.calledWith(200);
     expect(res.json).to.be.calledWithExactly(mockedSales);
@@ -30,7 +30,7 @@ describe('Testes unitários da camada controller de "sales"', function () {
 
   it('getSaleById retorna a venda correspondente ao id informado', async function () {
     req.params = { id: 1 };
-    sinon.stub(saleService, 'getSaleById').resolves(mockedSales[0]);
+    sinon.stub(saleService, 'getSaleById').resolves({ message: mockedSales[0] });
     await saleController.getSaleById(req, res);
     expect(res.status).to.be.calledWith(200);
     expect(res.json).to.be.calledWithExactly(mockedSales[0]);
