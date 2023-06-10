@@ -21,7 +21,7 @@ const getProductById = async (req, res) => {
 const registerProduct = async (req, res) => {
   const productData = req.body;
   const { type, message } = await productService.registerProduct(productData);
-  if (type) return res.status(errorMap[type]).json(message);
+  if (type) return res.status(errorMap[type]).json({ message });
   return res.status(201).json(message);
 };
 
