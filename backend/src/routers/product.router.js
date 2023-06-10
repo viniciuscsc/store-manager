@@ -7,5 +7,6 @@ const router = Router();
 
 router.get('/', productController.getAllProducts);
 router.get('/:id', existingProductValidation, productController.getProductById);
+router.post('/', productController.registerProduct);
 
 module.exports = router;
