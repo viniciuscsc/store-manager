@@ -10,13 +10,13 @@ describe('Testes unitários da camada service de "sales"', function () {
 
   it('getAllSales retorna todas as vendas cadastradas', async function () {
     sinon.stub(saleModel, 'getAllSales').resolves(mockedSales);
-    const result = await saleService.getAllSales();
-    expect(result).to.be.deep.equal(mockedSales);
+    const { message } = await saleService.getAllSales();
+    expect(message).to.be.deep.equal(mockedSales);
   });
 
   it('getSaleById retorna a venda correspondente ao id informado', async function () {
     sinon.stub(saleModel, 'getSaleById').resolves(mockedSales[0]);
-    const result = await saleService.getSaleById(1);
-    expect(result).to.be.deep.equal(mockedSales[0]);
+    const { message } = await saleService.getSaleById(1);
+    expect(message).to.be.deep.equal(mockedSales[0]);
   });
 });
