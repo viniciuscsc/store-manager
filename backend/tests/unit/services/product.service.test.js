@@ -10,13 +10,13 @@ describe('Testes unitários da camada service de "products"', function () {
 
   it('getAllProducts retorna todos os produtos cadastrados', async function () {
     sinon.stub(productModel, 'getAllProducts').resolves(mockedProducts);
-    const result = await productService.getAllProducts();
-    expect(result).to.be.deep.equal(mockedProducts);
+    const { message } = await productService.getAllProducts();
+    expect(message).to.be.deep.equal(mockedProducts);
   });
 
   it('getProductById retorna o produto correspondente ao id informado', async function () {
     sinon.stub(productModel, 'getProductById').resolves(mockedProducts[0]);
-    const result = await productService.getProductById(1);
-    expect(result).to.be.deep.equal(mockedProducts[0]);
+    const { message } = await productService.getProductById(1);
+    expect(message).to.be.deep.equal(mockedProducts[0]);
   });
 });
