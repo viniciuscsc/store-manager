@@ -17,11 +17,11 @@ const getProductById = async (productId) => {
 
 const registerProduct = async (productData) => {
   const { name } = productData;
-  const result = await connection.execute(
+  const [{ insertId }] = await connection.execute(
     'INSERT INTO products (name) VALUES (?)',
     [name],
   );
-  return result;
+  return insertId;
 };
 
 module.exports = {
