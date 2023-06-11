@@ -1,5 +1,5 @@
 const saleModel = require('../models/sale.model');
-const { validateId } = require('./validations/inputValueValidations');
+const { validateId, validateSale } = require('./validations/inputValueValidations');
 
 const getAllSales = async () => {
   const sales = await saleModel.getAllSales();
@@ -16,7 +16,8 @@ const getSaleById = async (saleId) => {
 };
 
 const registerSale = async (saleData) => {
-  // falta criar validação dos dados da venda
+  const error = validateSale(saleData);
+  if (error.type) return error;
 
   const newSale = await saleModel.registerSale(saleData);
   return { type: null, message: newSale };

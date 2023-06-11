@@ -1,6 +1,7 @@
 const saleService = require('../services/sale.service');
 
 const errorMap = {
+  INVALID_VALUE: 422,
   SALE_NOT_FOUND: 404,
 };
 
