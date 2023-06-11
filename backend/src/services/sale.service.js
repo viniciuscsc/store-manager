@@ -15,7 +15,15 @@ const getSaleById = async (saleId) => {
   return { type: null, message: sale };
 };
 
+const registerSale = async (saleData) => {
+  // falta criar validação dos dados da venda
+
+  const newSale = await saleModel.registerSale(saleData);
+  return { type: null, message: newSale };
+};
+
 module.exports = {
   getAllSales,
   getSaleById,
+  registerSale,
 };
