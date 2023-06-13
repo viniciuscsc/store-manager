@@ -8,8 +8,13 @@ const productSchema = Joi.object({
 
 const saleSchema = Joi.array().items(
   Joi.object({
-    productId: Joi.number().integer().min(1).required(),
-    quantity: Joi.number().integer().min(1).required(),
+    productId: Joi.number().integer().min(1).required()
+      .label('productId'),
+    quantity: Joi.number().integer().min(1).required()
+      .label('quantity'),
+  }).messages({
+    'any.required': '{{#label}} is required',
+    'number.min': '{{#label}} must be greater than zero',
   }),
 );
 

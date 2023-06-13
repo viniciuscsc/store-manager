@@ -1,7 +1,10 @@
 const saleService = require('../services/sale.service');
 
 const errorMap = {
-  INVALID_VALUE: 422,
+  INVALID_VALUE: 400,
+  VALUE_IS_REQUIRED: 400,
+  LESS_THAN_ONE: 422,
+  PRODUCT_NOT_FOUND: 404,
   SALE_NOT_FOUND: 404,
 };
 

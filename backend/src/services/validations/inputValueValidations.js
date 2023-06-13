@@ -1,4 +1,5 @@
 const { idSchema, productSchema, saleSchema } = require('./schema');
+const productModel = require('../../models/product.model');
 
 const validateId = (id) => {
   const { error } = idSchema.validate(id);
@@ -14,16 +15,49 @@ const validateProduct = (productData) => {
   return { type: null, message: '' };
 };
 
-const validateSale = (saleData) => {
+const validateProductIdSale = (saleData) => {
   const { error } = saleSchema.validate(saleData);
   if (error) {
-    return { type: 'INVALID_VALUE', message: 'invalid saleData' };
+    if (error.message === '"productId" is required') {
+      return { type: 'VALUE_IS_REQUIRED', message: '"productId" is required' };
+    }
   }
+  return { type: null, message: '' };
+};
+
+const validateQuatitySale = (saleData) => {
+  const { error } = saleSchema.validate(saleData);
+  if (error) {
+    if (error.message === '"quantity" is required') {
+      return { type: 'VALUE_IS_REQUIRED', message: '"quantity" is required' };
+    }
+    if (error.message === '"quantity" must be greater than zero') {
+      return { type: 'LESS_THAN_ONE', message: '"quantity" must be greater than or equal to 1' };
+    }
+  }
+  return { type: null, message: '' };
+};
+
+const validateProductIdExists = async (saleData) => {
+  const productsDatabase = await productModel.getAllProducts();
+  const idsDatabase = productsDatabase
+    .map(({ id }) => id);
+    
+    const idsSale = saleData
+    .map(({ productId }) => productId);
+    
+    const AllIdsExists = idsSale
+    .every((idSale) => idsDatabase.includes(idSale));
+    
+  if (!AllIdsExists) return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
+  
   return { type: null, message: '' };
 };
 
 module.exports = {
   validateId,
   validateProduct,
-  validateSale,
+  validateProductIdSale,
+  validateQuatitySale,
+  validateProductIdExists,
 };

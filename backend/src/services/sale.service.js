@@ -1,5 +1,11 @@
 const saleModel = require('../models/sale.model');
-const { validateId, validateSale } = require('./validations/inputValueValidations');
+
+const {
+  validateId,
+  validateProductIdSale,
+  validateQuatitySale,
+  validateProductIdExists,
+} = require('./validations/inputValueValidations');
 
 const getAllSales = async () => {
   const sales = await saleModel.getAllSales();
@@ -16,8 +22,14 @@ const getSaleById = async (saleId) => {
 };
 
 const registerSale = async (saleData) => {
-  const error = validateSale(saleData);
-  if (error.type) return error; 
+  const productIdError = validateProductIdSale(saleData);
+  if (productIdError.type) return productIdError;
+
+  const quantityError = validateQuatitySale(saleData);
+  if (quantityError.type) return quantityError;
+
+  const AllIdsExists = await validateProductIdExists(saleData);
+  if (AllIdsExists.type) return AllIdsExists;
 
   const newSaleId = await saleModel.registerSale(saleData);
   return { type: null, message: newSaleId };
