@@ -17,10 +17,10 @@ const getSaleById = async (saleId) => {
 
 const registerSale = async (saleData) => {
   const error = validateSale(saleData);
-  if (error.type) return error;
+  if (error.type) return error; 
 
-  const newSale = await saleModel.registerSale(saleData);
-  return { type: null, message: newSale };
+  const newSaleId = await saleModel.registerSale(saleData);
+  return { type: null, message: newSaleId };
 };
 
 module.exports = {

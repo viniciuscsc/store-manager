@@ -3,9 +3,14 @@ const sinon = require('sinon');
 
 const productModel = require('../../../src/models/product.model');
 const productService = require('../../../src/services/product.service');
-const { mockedProducts } = require('../mocks/product.mock');
+const {
+  mockedProducts,
+  mockedProductNotFound,
+  mockedProductData,
+  mockedNewProduct,
+} = require('../mocks/product.mock');
 
-describe('Testes unitários da camada service de "products"', function () {
+describe('Testes unitários de product.service', function () {
   afterEach(sinon.restore);
 
   it('getAllProducts retorna todos os produtos cadastrados', async function () {
@@ -14,9 +19,28 @@ describe('Testes unitários da camada service de "products"', function () {
     expect(message).to.be.deep.equal(mockedProducts);
   });
 
-  it('getProductById retorna o produto correspondente ao id informado', async function () {
-    sinon.stub(productModel, 'getProductById').resolves(mockedProducts[0]);
-    const { message } = await productService.getProductById(1);
-    expect(message).to.be.deep.equal(mockedProducts[0]);
+  describe('getProductById', function () {
+    it('retorna o produto correspondente ao id informado', async function () {
+      sinon.stub(productModel, 'getProductById').resolves(mockedProducts[0]);
+      const { message } = await productService.getProductById(1);
+      expect(message).to.be.deep.equal(mockedProducts[0]);
+    });
+  
+    it('retorna "Product not found" caso o id não exista', async function () {
+      sinon.stub(productModel, 'getProductById').resolves(undefined);
+      const { type, message } = await productService.getProductById(999);
+      expect(type).to.be.equal(mockedProductNotFound.type);
+      expect(message).to.be.deep.equal(mockedProductNotFound.message);
+    });
+  });
+
+  describe('registerProduct', function () {
+    it('retorna os dados do produto cadastrado no database', async function () {
+      sinon.stub(productModel, 'registerProduct').resolves([{ insertId: 4 }]);
+      sinon.stub(productModel, 'getProductById').resolves(mockedNewProduct);
+      const { type, message } = await productService.registerProduct(mockedProductData);
+      expect(type).to.be.equal(null);
+      expect(message).to.be.deep.equal(mockedNewProduct);
+    });
   });
 });

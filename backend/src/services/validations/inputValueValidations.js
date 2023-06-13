@@ -17,7 +17,7 @@ const validateProduct = (productData) => {
 const validateSale = (saleData) => {
   const { error } = saleSchema.validate(saleData);
   if (error) {
-    return { type: 'INVALID_VALUE', message: error.message };
+    return { type: 'INVALID_VALUE', message: 'invalid saleData' };
   }
   return { type: null, message: '' };
 };

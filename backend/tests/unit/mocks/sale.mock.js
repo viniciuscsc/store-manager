@@ -4,6 +4,21 @@ const mockedSales = [
   { saleId: 2, date: '2023-06-10 00:18:33', productId: 3, quantity: 15 },
 ];
 
+const mockedSaleData = [
+  { productId: 1, quantity: 1 },
+  { productId: 2, quantity: 5 },
+];
+
+const mockedNewSale = {
+  id: 3,
+  itemsSold: [
+    { productId: 1, quantity: 1 },
+    { productId: 2, quantity: 5 },
+  ],
+};
+
 module.exports = {
   mockedSales,
+  mockedSaleData,
+  mockedNewSale,
 };

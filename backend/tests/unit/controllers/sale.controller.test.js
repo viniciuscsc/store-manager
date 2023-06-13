@@ -8,7 +8,7 @@ const saleService = require('../../../src/services/sale.service');
 const saleController = require('../../../src/controllers/sale.controller');
 const { mockedSales } = require('../mocks/sale.mock');
 
-describe('Testes unitários da camada controller de "sales"', function () {
+describe('Testes unitários de sale.controller', function () {
   const req = {};
   const res = {};
 

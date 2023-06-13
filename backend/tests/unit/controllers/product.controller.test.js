@@ -8,7 +8,7 @@ const productService = require('../../../src/services/product.service');
 const productController = require('../../../src/controllers/product.controller');
 const { mockedProducts } = require('../mocks/product.mock');
 
-describe('Testes unitários da camada controller de "products"', function () {
+describe('Testes unitários de product.controller', function () {
   const req = {};
   const res = {};
 

@@ -5,7 +5,7 @@ const saleModel = require('../../../src/models/sale.model');
 const saleService = require('../../../src/services/sale.service');
 const { mockedSales } = require('../mocks/sale.mock');
 
-describe('Testes unitários da camada service de "sales"', function () {
+describe('Testes unitários de sale.service', function () {
   afterEach(sinon.restore);
 
   it('getAllSales retorna todas as vendas cadastradas', async function () {
