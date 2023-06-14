@@ -10,7 +10,12 @@ const validateId = (id) => {
 const validateProduct = (productData) => {
   const { error } = productSchema.validate(productData);
   if (error) {
-    return { type: 'INVALID_VALUE', message: '"name" length must be at least 5 characters long' };
+    if (error.message === '"name" is required') {
+      return { type: 'VALUE_IS_REQUIRED', message: '"name" is required' };
+    }
+    if (error.message === '"name" length must be at least 5 characters long') {
+      return { type: 'INVALID_VALUE', message: '"name" length must be at least 5 characters long' };
+    }
   } 
   return { type: null, message: '' };
 };

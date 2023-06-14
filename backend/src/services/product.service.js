@@ -28,7 +28,8 @@ const registerProduct = async (productData) => {
 };
 
 const updateProduct = async (productId, productData) => {
-  // validação
+  const error = validateProduct(productData);
+  if (error.type) return error;
   
   await productModel.updateProduct(productId, productData);  
   const updatedProduct = await productModel.getProductById(productId);

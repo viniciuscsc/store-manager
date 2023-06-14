@@ -1,6 +1,7 @@
 const productService = require('../services/product.service');
 
 const errorMap = {
+  VALUE_IS_REQUIRED: 400,
   INVALID_VALUE: 422,
   PRODUCT_NOT_FOUND: 404,
 };
@@ -35,7 +36,7 @@ const updateProduct = async (req, res) => {
   const productData = req.body;
 
   const { type, message } = await productService.updateProduct(+id, productData);
-  
+
   if (type) return res.status(errorMap[type]).json({ message });
   return res.status(200).json(message);
 };
