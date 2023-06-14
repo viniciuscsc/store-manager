@@ -17,11 +17,9 @@ const validateProduct = (productData) => {
 
 const validateProductIdSale = (saleData) => {
   const { error } = saleSchema.validate(saleData);
-  if (error) {
-    if (error.message === '"productId" is required') {
+    if (error && error.message === '"productId" is required') {
       return { type: 'VALUE_IS_REQUIRED', message: '"productId" is required' };
     }
-  }
   return { type: null, message: '' };
 };
 

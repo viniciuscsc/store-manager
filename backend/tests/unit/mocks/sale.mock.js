@@ -17,8 +17,23 @@ const mockedNewSale = {
   ],
 };
 
+const mockedSaleDataProductIdProblem = [
+  { productId: undefined, quantity: 1 },
+];
+
+const mockedSaleDataQuantityProblem = [
+  { productId: 1, quantity: 0 },
+];
+
+const mockedSaleDataNonExistentProductId = [
+  { productId: 999, quantity: 1 },
+];
+
 module.exports = {
   mockedSales,
   mockedSaleData,
   mockedNewSale,
+  mockedSaleDataProductIdProblem,
+  mockedSaleDataQuantityProblem,
+  mockedSaleDataNonExistentProductId,
 };
