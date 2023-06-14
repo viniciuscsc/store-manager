@@ -4,6 +4,7 @@ const getAllProducts = async () => {
   const [result] = await connection.execute(
     'SELECT * FROM products',
   );
+
   return result;
 };
 
@@ -12,20 +13,33 @@ const getProductById = async (productId) => {
     'SELECT * FROM products WHERE id = ?',
     [productId],
   );
+
   return result;
 };
 
 const registerProduct = async (productData) => {
   const { name } = productData;
+  
   const [{ insertId }] = await connection.execute(
     'INSERT INTO products (name) VALUES (?)',
     [name],
   );
+
   return insertId;
+};
+
+const updateProduct = async (productId, productData) => {
+  const { name } = productData;
+  
+  await connection.execute(
+    'UPDATE products SET name = (?) WHERE id = (?)',
+    [name, productId],
+  );
 };
 
 module.exports = {
   getAllProducts,
   getProductById,
   registerProduct,
+  updateProduct,
 };

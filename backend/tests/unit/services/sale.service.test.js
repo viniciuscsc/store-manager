@@ -49,7 +49,7 @@ describe('Testes unitários de sale.service', function () {
     });
 
     it(
-      'retorna "Product not found", se uma venda tem o campo productId inexistente',
+      'retorna "Product not found", se uma venda tem um campo productId inexistente',
       async function () {
         sinon.stub(productModel, 'getAllProducts').resolves(mockedProducts);
         const validateProductIdExists = sinon.stub();

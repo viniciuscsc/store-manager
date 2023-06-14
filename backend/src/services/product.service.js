@@ -25,8 +25,17 @@ const registerProduct = async (productData) => {
   return { type: null, message: newProduct };
 };
 
+const updateProduct = async (productId, productData) => {
+  // validação
+  
+  await productModel.updateProduct(productId, productData);
+  const updatedProduct = await productModel.getProductById(productId);
+  return updatedProduct;
+};
+
 module.exports = {
   getAllProducts,
   getProductById,
   registerProduct,
+  updateProduct,
 };
