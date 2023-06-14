@@ -1,5 +1,9 @@
 const productModel = require('../models/product.model');
-const { validateId, validateProduct } = require('./validations/inputValueValidations');
+const {
+  validateId,
+  validateProduct,
+  validateProductIdExists,
+} = require('./validations/inputValueValidations');
 
 const getAllProducts = async () => {
   const products = await productModel.getAllProducts();
@@ -28,8 +32,11 @@ const registerProduct = async (productData) => {
 };
 
 const updateProduct = async (productId, productData) => {
-  const error = validateProduct(productData);
-  if (error.type) return error;
+  const productDataError = validateProduct(productData);
+  if (productDataError.type) return productDataError;
+
+  const product = await productModel.getProductById(productId);
+  if (!product) return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
   
   await productModel.updateProduct(productId, productData);  
   const updatedProduct = await productModel.getProductById(productId);
