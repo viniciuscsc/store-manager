@@ -3,6 +3,7 @@ const { validateId, validateProduct } = require('./validations/inputValueValidat
 
 const getAllProducts = async () => {
   const products = await productModel.getAllProducts();
+
   return { type: null, message: products };
 };
 
@@ -11,6 +12,7 @@ const getProductById = async (productId) => {
   if (error.type) return error;
 
   const product = await productModel.getProductById(productId);
+
   if (product) return { type: null, message: product };
   return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
 };
@@ -28,9 +30,10 @@ const registerProduct = async (productData) => {
 const updateProduct = async (productId, productData) => {
   // validação
   
-  await productModel.updateProduct(productId, productData);
+  await productModel.updateProduct(productId, productData);  
   const updatedProduct = await productModel.getProductById(productId);
-  return updatedProduct;
+
+  return { type: null, message: updatedProduct };
 };
 
 module.exports = {
