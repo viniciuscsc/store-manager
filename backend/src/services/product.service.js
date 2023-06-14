@@ -2,7 +2,6 @@ const productModel = require('../models/product.model');
 const {
   validateId,
   validateProduct,
-  validateProductIdExists,
 } = require('./validations/inputValueValidations');
 
 const getAllProducts = async () => {
