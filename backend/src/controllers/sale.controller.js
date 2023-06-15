@@ -35,7 +35,7 @@ const deleteSale = async (req, res) => {
   const { id } = req.params;
   const { type, message } = await saleService.deleteSale(+id);
 
-  // validação
+  if (type) return res.status(errorMap[type]).json({ message });
 
   return res.status(204).end();
 };
