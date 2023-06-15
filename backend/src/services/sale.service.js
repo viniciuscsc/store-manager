@@ -37,7 +37,7 @@ const registerSale = async (saleData) => {
 
 const deleteSale = async (productId) => {
   const sale = await saleModel.getSaleById(productId);
-  if (!sale) return { type: 'SALE_NOT_FOUND', message: 'Sale not found' };
+  if (!sale || sale.length < 1) return { type: 'SALE_NOT_FOUND', message: 'Sale not found' };
 
   await saleModel.deleteSale(productId);
 
