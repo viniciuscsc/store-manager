@@ -37,15 +37,18 @@ const updateProduct = async (productId, productData) => {
   const product = await productModel.getProductById(productId);
   if (!product) return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
   
-  await productModel.updateProduct(productId, productData);  
+  await productModel.updateProduct(productId, productData);
   const updatedProduct = await productModel.getProductById(productId);
 
   return { type: null, message: updatedProduct };
 };
 
-const deleteProduct = async (productId) => {
-  await productModel.deleteProduct(productId);
+const deleteProduct = async (productId) => {  
+  const product = await productModel.getProductById(productId);
+  if (!product) return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
   
+  await productModel.deleteProduct(productId);
+
   return { type: null, message: '' };
 };
 

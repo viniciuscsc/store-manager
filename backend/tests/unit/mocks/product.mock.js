@@ -18,9 +18,14 @@ const mockedNewProduct = {
   name: 'Produto X',
 };
 
+const mockedProductDataError = {
+  name: undefined,
+};
+
 module.exports = {
   mockedProducts,
   mockedProductNotFound,
   mockedProductData,
   mockedNewProduct,
+  mockedProductDataError,
 };
