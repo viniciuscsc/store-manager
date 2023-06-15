@@ -35,8 +35,17 @@ const registerSale = async (saleData) => {
   return { type: null, message: newSaleId };
 };
 
+const deleteSale = async (productId) => {
+  // validação
+
+  await saleModel.deleteSale(productId);
+
+  return { type: null, message: '' };
+};
+
 module.exports = {
   getAllSales,
   getSaleById,
   registerSale,
+  deleteSale,
 };
