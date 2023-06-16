@@ -44,10 +44,10 @@ const deleteSale = async (productId) => {
   return { type: null, message: '' };
 };
 
-const updateProductQuantity = async (productId, newQuantity) => {
+const updateProductQuantity = async (saleId, productId, newQuantity) => {
   // validações
 
-  const result = await saleModel.updateProductQuantity(productId, newQuantity);
+  const result = await saleModel.updateProductQuantity(saleId, productId, newQuantity);
 
   return result;
 };
