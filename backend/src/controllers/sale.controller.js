@@ -40,7 +40,6 @@ const deleteSale = async (req, res) => {
   return res.status(204).end();
 };
 
-// /sales/:saleId/products/:productId/quantity
 const updateProductQuantity = async (req, res) => {
   const { saleId, productId } = req.params;
   const { quantity } = req.body;
