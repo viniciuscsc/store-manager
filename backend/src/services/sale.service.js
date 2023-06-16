@@ -44,9 +44,18 @@ const deleteSale = async (productId) => {
   return { type: null, message: '' };
 };
 
+const updateProductQuantity = async (productId, newQuantity) => {
+  // validações
+
+  const result = await saleModel.updateProductQuantity(productId, newQuantity);
+
+  return result;
+};
+
 module.exports = {
   getAllSales,
   getSaleById,
   registerSale,
   deleteSale,
+  updateProductQuantity,
 };
