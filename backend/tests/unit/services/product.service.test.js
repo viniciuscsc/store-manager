@@ -72,7 +72,7 @@ describe('Testes unitários de product.service', function () {
   });
 
   describe('deleteProduct', function () {
-    it('retorna "Product not found" caso o id não exista', async function () {
+    it('retorna "Product not found" se o id não existe', async function () {
       sinon.stub(productModel, 'getProductById').resolves(undefined);
       const { type, message } = await productService.deleteProduct(999);
       expect(type).to.be.equal(mockedProductNotFound.type);

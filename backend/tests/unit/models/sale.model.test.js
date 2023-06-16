@@ -30,4 +30,15 @@ describe('Testes unitários de sale.model', function () {
     expect(result).to.be.deep.equal(mockedNewSale);
     expect(result.itemsSold).to.deep.equal(mockedSaleData);
   });
+
+  it('deleteSale deleta uma venda no database', async function () {
+    sinon.stub(connection, 'execute').resolves();
+
+    await saleModel.deleteSale(1);
+
+    expect(connection.execute).to.be.calledWith(
+      'DELETE FROM sales WHERE id = ?',
+      [1],
+    );
+  });
 });

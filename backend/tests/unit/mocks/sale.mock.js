@@ -29,6 +29,11 @@ const mockedSaleDataNonExistentProductId = [
   { productId: 999, quantity: 1 },
 ];
 
+const mockedNotFoundSale = {
+  type: 'SALE_NOT_FOUND',
+  message: 'Sale not found',
+};
+
 module.exports = {
   mockedSales,
   mockedSaleData,
@@ -36,4 +41,5 @@ module.exports = {
   mockedSaleDataProductIdProblem,
   mockedSaleDataQuantityProblem,
   mockedSaleDataNonExistentProductId,
+  mockedNotFoundSale,
 };

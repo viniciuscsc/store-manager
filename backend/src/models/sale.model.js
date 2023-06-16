@@ -55,7 +55,7 @@ const deleteSale = async (saleId) => {
   );
 
   await connection.execute(
-    'delete from sales_products WHERE sale_id = ?',
+    'DELETE FROM sales_products WHERE sale_id = ?',
     [saleId],
   );
 };

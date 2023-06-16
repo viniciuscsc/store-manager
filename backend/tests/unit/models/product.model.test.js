@@ -1,9 +1,16 @@
-const { expect } = require('chai');
+const { expect, use } = require('chai');
 const sinon = require('sinon');
+const sinonChai = require('sinon-chai');
+
+use(sinonChai);
 
 const connection = require('../../../src/models/connection');
 const productModel = require('../../../src/models/product.model');
-const { mockedProducts, mockedNewProduct } = require('../mocks/product.mock');
+const {
+  mockedProducts,
+  mockedNewProduct,
+  mockedProductData,
+} = require('../mocks/product.mock');
 
 describe('Testes unitários de product.model', function () {
   afterEach(sinon.restore);
@@ -24,5 +31,27 @@ describe('Testes unitários de product.model', function () {
     sinon.stub(connection, 'execute').resolves([{ insertId: 4 }]);
     const result = await productModel.registerProduct(mockedNewProduct);
     expect(result).to.be.equal(4);
+  });
+
+  it('updateProduct atualiza um produto no database', async function () {
+    sinon.stub(connection, 'execute').resolves();
+
+    await productModel.updateProduct(1, mockedProductData);
+
+    expect(connection.execute).to.be.calledWith(
+      'UPDATE products SET name = (?) WHERE id = (?)',
+      [mockedProductData.name, 1],
+    );
+  });
+
+  it('deleteProduct deleta um produto no database', async function () {
+    sinon.stub(connection, 'execute').resolves();
+
+    await productModel.deleteProduct(1);
+
+    expect(connection.execute).to.be.calledWith(
+      'DELETE FROM products WHERE id = ?',
+      [1],
+    );
   });
 });
