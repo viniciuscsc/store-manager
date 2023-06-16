@@ -61,12 +61,24 @@ const deleteSale = async (saleId) => {
 };
 
 const updateProductQuantity = async (saleId, productId, newQuantity) => {
-  const [result] = await connection.execute(
+  await connection.execute(
     'UPDATE sales_products SET quantity = ? WHERE sale_id = ? AND product_id = ?',
     [newQuantity, saleId, productId],
   );
 
-  return result;
+  const [{ date }] = await connection.execute(
+    'SELECT * FROM sales WHERE id = ?',
+    [saleId],
+  );
+
+  const updatedItemSold = {
+    date,
+    productId,
+    quantity: newQuantity,
+    saleId,
+  };
+
+  return updatedItemSold;
 };
 
 module.exports = {
