@@ -60,10 +60,12 @@ const deleteSale = async (saleId) => {
   );
 };
 
-const updateProductQuantity = async (saleId, productId, newQuantity) => {
+const updateProductQuantity = async (saleId, productId, saleData) => {
+  const { quantity } = saleData;
+
   await connection.execute(
     'UPDATE sales_products SET quantity = ? WHERE sale_id = ? AND product_id = ?',
-    [newQuantity, saleId, productId],
+    [quantity, saleId, productId],
   );
 
   const [[{ date }]] = await connection.execute(
@@ -74,7 +76,7 @@ const updateProductQuantity = async (saleId, productId, newQuantity) => {
   const updatedItemSold = {
     date,
     productId,
-    quantity: newQuantity,
+    quantity,
     saleId,
   };
 

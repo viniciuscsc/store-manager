@@ -42,9 +42,11 @@ const deleteSale = async (req, res) => {
 
 const updateProductQuantity = async (req, res) => {
   const { saleId, productId } = req.params;
-  const { quantity } = req.body;
+  const saleData = req.body;
 
-  const { type, message } = await saleService.updateProductQuantity(+saleId, +productId, +quantity);
+  const { type, message } = await saleService.updateProductQuantity(+saleId, +productId, saleData);
+
+  if (type) return res.status(errorMap[type]).json({ message });
 
   return res.status(200).json(message);
 };

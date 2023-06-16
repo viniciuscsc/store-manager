@@ -1,4 +1,5 @@
 const saleModel = require('../models/sale.model');
+const productModel = require('../models/product.model');
 
 const {
   validateId,
@@ -44,10 +45,17 @@ const deleteSale = async (productId) => {
   return { type: null, message: '' };
 };
 
-const updateProductQuantity = async (saleId, productId, newQuantity) => {
-  // validações
+const updateProductQuantity = async (saleId, productId, saleData) => {
+  const quantityError = validateQuatitySale(saleData);
+  if (quantityError.type) return quantityError;
 
-  const updatedItemSold = await saleModel.updateProductQuantity(saleId, productId, newQuantity);
+  const product = await productModel.getProductById(productId);
+  if (!product) return { type: 'PRODUCT_NOT_FOUND', message: 'Product not found' };
+
+  const sale = await saleModel.getSaleById(saleId);
+  if (!sale || sale.length < 1) return { type: 'SALE_NOT_FOUND', message: 'Sale not found' };
+
+  const updatedItemSold = await saleModel.updateProductQuantity(saleId, productId, saleData);
 
   return { type: null, message: updatedItemSold };
 };
