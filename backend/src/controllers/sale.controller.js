@@ -44,7 +44,7 @@ const updateProductQuantity = async (req, res) => {
   const { saleId, productId } = req.params;
   const { quantity } = req.body;
 
-  const result = await saleService.updateProductQuantity(saleId, productId, quantity);
+  const result = await saleService.updateProductQuantity(+saleId, +productId, +quantity);
 
   return res.status(200).json(result);
 };

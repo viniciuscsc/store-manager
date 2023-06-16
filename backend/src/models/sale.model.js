@@ -66,7 +66,7 @@ const updateProductQuantity = async (saleId, productId, newQuantity) => {
     [newQuantity, saleId, productId],
   );
 
-  const [{ date }] = await connection.execute(
+  const [[{ date }]] = await connection.execute(
     'SELECT * FROM sales WHERE id = ?',
     [saleId],
   );
