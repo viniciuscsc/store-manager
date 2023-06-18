@@ -1,17 +1,23 @@
 const produtoService = require('../services/produtoService');
 
+const erros = {
+  NOT_FOUND: 404,
+};
+
 const obterProdutos = async (_req, res) => {
-  const produtos = await produtoService.obterProdutos();
+  const { message } = await produtoService.obterProdutos();
   
-  return res.status(200).json(produtos);
+  return res.status(200).json(message);
 };
 
 const obterProdutoPorId = async (req, res) => {
   const { id } = req.params;
 
-  const produto = await produtoService.obterProdutoPorId(+id);
+  const { type, message } = await produtoService.obterProdutoPorId(+id);
 
-  return res.status(200).json(produto);
+  if (type) return res.status(erros[type]).json({ message });
+
+  return res.status(200).json(message);
 };
 
 module.exports = {
