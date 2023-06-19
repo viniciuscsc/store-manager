@@ -14,7 +14,17 @@ const obterProdutoPorId = async (idProduto) => {
   return { type: null, message: produto };
 };
 
+const cadastrarProduto = async (dadosProduto) => {
+  const idNovoProduto = await produtoModel.cadastrarProduto(dadosProduto);
+  const { name } = dadosProduto;
+
+  const novoProduto = { id: idNovoProduto, name };
+
+  return { type: null, message: novoProduto };
+};
+
 module.exports = {
   obterProdutos,
   obterProdutoPorId,
+  cadastrarProduto,
 };

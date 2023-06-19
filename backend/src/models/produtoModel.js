@@ -15,7 +15,19 @@ const obterProdutoPorId = async (idProduto) => {
   return produto;
 };
 
+const cadastrarProduto = async (dadosProduto) => {
+  const { name } = dadosProduto;
+
+  const [{ insertId }] = await connection.execute(
+    'INSERT INTO products (name) VALUE (?)',
+    [name],
+  );
+
+  return insertId;
+};
+
 module.exports = {
   obterProdutos,
   obterProdutoPorId,
+  cadastrarProduto,
 };

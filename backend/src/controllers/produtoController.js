@@ -20,7 +20,18 @@ const obterProdutoPorId = async (req, res) => {
   return res.status(200).json(message);
 };
 
+const cadastrarProduto = async (req, res) => {
+  const dadosProduto = req.body;
+
+  const { type, message } = await produtoService.cadastrarProduto(dadosProduto);
+
+  if (type) return res.status(erros[type]).json({ message });
+
+  return res.status(201).json(message);
+};
+
 module.exports = {
   obterProdutos,
   obterProdutoPorId,
+  cadastrarProduto,
 };
