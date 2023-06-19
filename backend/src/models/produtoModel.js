@@ -1,4 +1,3 @@
-const { connect } = require('../routers/produtoRouter');
 const connection = require('./connection');
 
 const obterProdutos = async () => {
