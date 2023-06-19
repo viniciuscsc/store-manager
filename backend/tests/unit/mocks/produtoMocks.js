@@ -6,7 +6,13 @@ const produtosMock = [
 
 const novoProdutoMock = { name: 'ProdutoX' };
 
+const produtoNaoEncontradoMock = {
+  type: 'NOT_FOUND',
+  message: 'Product not found',
+};
+
 module.exports = {
   produtosMock,
   novoProdutoMock,
+  produtoNaoEncontradoMock,
 };
