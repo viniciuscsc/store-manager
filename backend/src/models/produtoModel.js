@@ -26,8 +26,18 @@ const cadastrarProduto = async (dadosProduto) => {
   return insertId;
 };
 
+const atualizarProduto = async (idProduto, dadosProduto) => {
+  const { name } = dadosProduto;
+
+  await connection.execute(
+    'UPDATE products SET name = ? WHERE id = ?',
+    [name, idProduto],
+  );
+};
+
 module.exports = {
   obterProdutos,
   obterProdutoPorId,
   cadastrarProduto,
+  atualizarProduto,
 };

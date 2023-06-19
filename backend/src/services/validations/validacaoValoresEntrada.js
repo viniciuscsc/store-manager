@@ -49,8 +49,17 @@ const validarProductIdsVenda = async (venda) => {
   return { type: null, message: '' };
 };
 
+const validarProductIdExiste = async (idProduto) => {
+  const produto = await produtoModel.obterProdutoPorId(idProduto);
+
+  if (!produto) return { type: 'NOT_FOUND', message: 'Product not found' };
+
+  return { type: null, message: '' };
+};
+
 module.exports = {
   validarProduto,
   validarVenda,
   validarProductIdsVenda,
+  validarProductIdExiste,
 };

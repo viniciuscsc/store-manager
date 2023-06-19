@@ -32,8 +32,20 @@ const cadastrarProduto = async (req, res) => {
   return res.status(201).json(message);
 };
 
+const atualizarProduto = async (req, res) => {
+  const { id } = req.params;
+  const dadosProduto = req.body;
+
+  const { type, message } = await produtoService.atualizarProduto(+id, dadosProduto);
+
+  if (type) return res.status(erros[type]).json({ message });
+
+  return res.status(200).json(message);
+};
+
 module.exports = {
   obterProdutos,
   obterProdutoPorId,
   cadastrarProduto,
+  atualizarProduto,
 };

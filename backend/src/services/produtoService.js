@@ -1,5 +1,8 @@
 const produtoModel = require('../models/produtoModel');
-const { validarProduto } = require('./validations/validacaoValoresEntrada');
+const {
+  validarProduto,
+  validarProductIdExiste,
+} = require('./validations/validacaoValoresEntrada');
 
 const obterProdutos = async () => {
   const produtos = await produtoModel.obterProdutos();
@@ -20,15 +23,29 @@ const cadastrarProduto = async (dadosProduto) => {
   if (produtoErro.type) return produtoErro;
 
   const idNovoProduto = await produtoModel.cadastrarProduto(dadosProduto);
-  const { name } = dadosProduto;
 
-  const novoProduto = { id: idNovoProduto, name };
+  const novoProduto = { id: idNovoProduto, name: dadosProduto.name };
 
   return { type: null, message: novoProduto };
+};
+
+const atualizarProduto = async (idProduto, dadosProduto) => {
+  const idProdutoErro = await validarProductIdExiste(idProduto);
+  if (idProdutoErro.type) return idProdutoErro;
+
+  const produtoErro = validarProduto(dadosProduto);
+  if (produtoErro.type) return produtoErro;
+
+  await produtoModel.atualizarProduto(idProduto, dadosProduto);
+
+  const produtoAtualizado = { id: idProduto, name: dadosProduto.name };
+
+  return { type: null, message: produtoAtualizado };
 };
 
 module.exports = {
   obterProdutos,
   obterProdutoPorId,
   cadastrarProduto,
+  atualizarProduto,
 };
