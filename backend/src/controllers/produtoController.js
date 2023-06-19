@@ -43,9 +43,20 @@ const atualizarProduto = async (req, res) => {
   return res.status(200).json(message);
 };
 
+const deletarProduto = async (req, res) => {
+  const { id } = req.params;
+
+  const { type, message } = await produtoService.deletarProduto(+id);
+
+  if (type) return res.status(erros[type]).json({ message });
+
+  return res.status(204).end();
+};
+
 module.exports = {
   obterProdutos,
   obterProdutoPorId,
   cadastrarProduto,
   atualizarProduto,
+  deletarProduto,
 };

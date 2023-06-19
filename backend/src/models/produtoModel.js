@@ -1,3 +1,4 @@
+const { connect } = require('../routers/produtoRouter');
 const connection = require('./connection');
 
 const obterProdutos = async () => {
@@ -35,9 +36,17 @@ const atualizarProduto = async (idProduto, dadosProduto) => {
   );
 };
 
+const deletarProduto = async (idProduto) => {
+  await connection.execute(
+    'DELETE FROM products WHERE id = ?',
+    [idProduto],
+  );
+};
+
 module.exports = {
   obterProdutos,
   obterProdutoPorId,
   cadastrarProduto,
   atualizarProduto,
+  deletarProduto,
 };

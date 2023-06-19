@@ -43,9 +43,19 @@ const atualizarProduto = async (idProduto, dadosProduto) => {
   return { type: null, message: produtoAtualizado };
 };
 
+const deletarProduto = async (idProduto) => {
+  const idProdutoErro = await validarProductIdExiste(idProduto);
+  if (idProdutoErro.type) return idProdutoErro;
+
+  await produtoModel.deletarProduto(idProduto);
+
+  return { type: null, message: '' };
+};
+
 module.exports = {
   obterProdutos,
   obterProdutoPorId,
   cadastrarProduto,
   atualizarProduto,
+  deletarProduto,
 };
