@@ -17,7 +17,16 @@ const vendaSchema = Joi.array().items(Joi.object({
   'number.min': '{{#label}} must be greater than or equal to 1',
 }));
 
+const quantidadeSchema = Joi.object({
+  quantity: Joi.number().integer().min(1).required()
+    .label('quantity'),
+}).messages({
+  'any.required': '{{#label}} is required',
+  'number.min': '{{#label}} must be greater than or equal to 1',
+});
+
 module.exports = {
   produtoSchema,
   vendaSchema,
+  quantidadeSchema,
 };

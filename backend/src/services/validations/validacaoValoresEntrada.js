@@ -1,4 +1,4 @@
-const { produtoSchema, vendaSchema } = require('./schema');
+const { produtoSchema, vendaSchema, quantidadeSchema } = require('./schema');
 
 const produtoModel = require('../../models/produtoModel');
 const saleModel = require('../../models/vendaModel');
@@ -20,6 +20,21 @@ const validarProduto = (produto) => {
 
 const validarVenda = (venda) => {
   const { error } = vendaSchema.validate(venda);
+
+  if (error) {
+    if (error.message.includes('is required')) {
+      return { type: 'VALUE_IS_REQUIRED', message: error.message };
+    }
+    if (error.message.includes('must be greater than or equal to 1')) {
+      return { type: 'SMALL_VALUE', message: error.message };
+    }
+  }
+
+  return { type: null, message: '' };
+};
+
+const validarQuantidade = (quantidade) => {
+  const { error } = quantidadeSchema.validate(quantidade);
 
   if (error) {
     if (error.message.includes('is required')) {
@@ -69,6 +84,7 @@ const validarSaleIdExiste = async (idVenda) => {
 module.exports = {
   validarProduto,
   validarVenda,
+  validarQuantidade,
   validarProductIdsVenda,
   validarProductIdExiste,
   validarSaleIdExiste,

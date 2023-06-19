@@ -48,6 +48,22 @@ const cadastrarVenda = async (dadosVenda) => {
   return insertId;
 };
 
+const atualizarVenda = async (idVenda, idProduto, dadosAlterar) => {
+  const { quantity } = dadosAlterar;
+  
+  await connection.execute(
+    'UPDATE sales_products SET quantity = ? WHERE sale_id = ? AND product_id = ?',
+    [quantity, idVenda, idProduto],
+  );
+
+  const [[{ date }]] = await connection.execute(
+    'SELECT * FROM sales WHERE id = ?',
+    [idVenda],
+  );
+
+  return date;
+};
+
 const deletarVenda = async (idVenda) => {
   await connection.execute(
     'DELETE FROM sales WHERE id = ?',
@@ -64,5 +80,6 @@ module.exports = {
   obterVendas,
   obterVendaPorId,
   cadastrarVenda,
+  atualizarVenda,
   deletarVenda,
 };

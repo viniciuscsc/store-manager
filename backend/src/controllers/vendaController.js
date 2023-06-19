@@ -32,6 +32,17 @@ const cadastrarVenda = async (req, res) => {
   return res.status(201).json(message);
 };
 
+const atualizarVenda = async (req, res) => {
+  const { saleId, productId } = req.params;
+  const dadosAlterar = req.body;
+
+  const { type, message } = await vendaService.atualizarVenda(+saleId, +productId, dadosAlterar);
+
+  if (type) return res.status(erros[type]).json({ message });
+
+  return res.status(200).json(message);
+};
+
 const deletarVenda = async (req, res) => {
   const { id } = req.params;
 
@@ -47,4 +58,5 @@ module.exports = {
   obterVendaPorId,
   cadastrarVenda,
   deletarVenda,
+  atualizarVenda,
 };
