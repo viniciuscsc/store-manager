@@ -48,8 +48,21 @@ const cadastrarVenda = async (dadosVenda) => {
   return insertId;
 };
 
+const deletarVenda = async (idVenda) => {
+  await connection.execute(
+    'DELETE FROM sales WHERE id = ?',
+    [idVenda],
+  );
+
+  await connection.execute(
+    'DELETE FROM sales_products WHERE sale_id = ?',
+    [idVenda],
+  );
+};
+
 module.exports = {
   obterVendas,
   obterVendaPorId,
   cadastrarVenda,
+  deletarVenda,
 };

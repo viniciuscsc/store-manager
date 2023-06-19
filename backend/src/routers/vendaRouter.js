@@ -7,5 +7,6 @@ const router = Router();
 router.get('/', vendaController.obterVendas);
 router.get('/:id', vendaController.obterVendaPorId);
 router.post('/', vendaController.cadastrarVenda);
+router.delete('/:id', vendaController.deletarVenda);
 
 module.exports = router;

@@ -1,6 +1,7 @@
 const { produtoSchema, vendaSchema } = require('./schema');
 
 const produtoModel = require('../../models/produtoModel');
+const saleModel = require('../../models/vendaModel');
 
 const validarProduto = (produto) => {
   const { error } = produtoSchema.validate(produto);
@@ -57,9 +58,18 @@ const validarProductIdExiste = async (idProduto) => {
   return { type: null, message: '' };
 };
 
+const validarSaleIdExiste = async (idVenda) => {
+  const venda = await saleModel.obterVendaPorId(idVenda);
+
+  if (!venda || venda.length === 0) return { type: 'NOT_FOUND', message: 'Sale not found' };
+
+  return { type: null, message: '' };
+};
+
 module.exports = {
   validarProduto,
   validarVenda,
   validarProductIdsVenda,
   validarProductIdExiste,
+  validarSaleIdExiste,
 };
