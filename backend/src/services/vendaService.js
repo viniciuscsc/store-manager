@@ -14,7 +14,16 @@ const obterVendaPorId = async (idVenda) => {
   return { type: null, message: venda };
 };
 
+const cadastrarVenda = async (dadosVenda) => {
+  const idNovaVenda = await vendaModel.cadastrarVenda(dadosVenda);
+
+  const novaVenda = { id: idNovaVenda, itemsSold: dadosVenda };
+
+  return { type: null, message: novaVenda };
+};
+
 module.exports = {
   obterVendas,
   obterVendaPorId,
+  cadastrarVenda,
 };

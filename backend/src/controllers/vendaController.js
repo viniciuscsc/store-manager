@@ -20,7 +20,18 @@ const obterVendaPorId = async (req, res) => {
   return res.status(200).json(message);
 };
 
+const cadastrarVenda = async (req, res) => {
+  const dadosVenda = req.body;
+
+  const { type, message } = await vendaService.cadastrarVenda(dadosVenda);
+
+  if (type) return res.status(erros[type]).json({ message });
+
+  return res.status(201).json(message);
+};
+
 module.exports = {
   obterVendas,
   obterVendaPorId,
+  cadastrarVenda,
 };

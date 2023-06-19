@@ -33,7 +33,23 @@ const obterVendaPorId = async (idVenda) => {
   return venda; 
 };
 
+const cadastrarVenda = async (dadosVenda) => {
+  const [{ insertId }] = await connection.execute(
+    'INSERT INTO sales (date) VALUE (NOW())',
+  );
+  
+  const itens = dadosVenda.map(({ productId, quantity }) => connection.execute(
+    'INSERT INTO sales_products (sale_id, product_id, quantity) VALUES (?, ?, ?)',
+    [insertId, productId, quantity],
+  ));
+
+  await Promise.all(itens);
+
+  return insertId;
+};
+
 module.exports = {
   obterVendas,
   obterVendaPorId,
+  cadastrarVenda,
 };
