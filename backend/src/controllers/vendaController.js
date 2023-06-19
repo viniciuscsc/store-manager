@@ -1,7 +1,9 @@
 const vendaService = require('../services/vendaService');
 
 const erros = {
+  VALUE_IS_REQUIRED: 400,
   NOT_FOUND: 404,
+  SMALL_VALUE: 422,
 };
 
 const obterVendas = async (_req, res) => {

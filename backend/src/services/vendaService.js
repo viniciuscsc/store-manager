@@ -1,5 +1,10 @@
 const vendaModel = require('../models/vendaModel');
 
+const {
+  validarVenda,
+  validarProductIdsVenda,
+} = require('./validations/validacaoValoresEntrada');
+
 const obterVendas = async () => {
   const vendas = await vendaModel.obterVendas();
 
@@ -15,6 +20,12 @@ const obterVendaPorId = async (idVenda) => {
 };
 
 const cadastrarVenda = async (dadosVenda) => {
+  const vendaErro = validarVenda(dadosVenda);
+  if (vendaErro.type) return vendaErro;
+
+  const vendaProductIdsErro = await validarProductIdsVenda(dadosVenda);
+  if (vendaProductIdsErro.type) return vendaProductIdsErro;
+
   const idNovaVenda = await vendaModel.cadastrarVenda(dadosVenda);
 
   const novaVenda = { id: idNovaVenda, itemsSold: dadosVenda };
