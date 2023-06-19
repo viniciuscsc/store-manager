@@ -34,7 +34,7 @@ describe('Testes de produtoService', function () {
       async function () {
         sinon.stub(produtoModel, 'obterProdutoPorId').resolves(undefined);
 
-        const { type, message } = await produtoService.obterProdutoPorId(999);
+        const { type, message } = await produtoService.obterProdutoPorId(99);
 
         expect(type).to.be.equal(produtoNaoEncontradoMock.type);
         expect(message).to.be.equal(produtoNaoEncontradoMock.message);
@@ -90,7 +90,65 @@ describe('Testes de produtoService', function () {
     });
   });
 
-  describe('atualizarProduto', function () {});
+  describe('A função atualizarProduto', function () {
+    it(
+      'retorna "Product not found" se o id informado não existe no database',
+      async function () {
+        sinon.stub(produtoModel, 'obterProdutoPorId').resolves(undefined);
 
-  describe('deletarProduto', function () {});
+        const { type, message } = await produtoService.atualizarProduto(99, novoProdutoMock);
+
+        expect(type).to.be.equal('NOT_FOUND');
+        expect(message).to.be.equal('Product not found');
+      },
+    );
+
+    it('retorna "name is required" se a requisição não tiver o campo "name"', async function () {
+      sinon.stub(produtoModel, 'obterProdutoPorId').resolves(produtosMock[0]);
+
+      const produtoSemName = {};
+
+      const { type, message } = await produtoService.atualizarProduto(1, produtoSemName);
+
+      expect(type).to.be.equal('VALUE_IS_REQUIRED');
+      expect(message).to.be.equal('"name" is required');
+    });
+
+    it('retorna o produto atualizado', async function () {
+      sinon.stub(produtoModel, 'obterProdutoPorId').resolves(produtosMock[0]);
+      sinon.stub(produtoModel, 'atualizarProduto').resolves();
+
+      const { type, message } = await produtoService.atualizarProduto(1, novoProdutoMock);
+
+      expect(type).to.be.equal(null);
+      expect(message).to.be.deep.equal({
+        id: 1,
+        name: novoProdutoMock.name,
+      });
+    });
+  });
+
+  describe('A função deletarProduto', function () {
+    it(
+      'retorna "Product not found" se o id informado não existe no database',
+      async function () {
+        sinon.stub(produtoModel, 'obterProdutoPorId').resolves(undefined);
+
+        const { type, message } = await produtoService.deletarProduto(99);
+
+        expect(type).to.be.equal('NOT_FOUND');
+        expect(message).to.be.equal('Product not found');
+      },
+    );
+
+    it('retorna { type: null, message: "" }', async function () {
+      sinon.stub(produtoModel, 'obterProdutoPorId').resolves(produtosMock[0]);
+      sinon.stub(produtoModel, 'deletarProduto').resolves();
+
+      const { type, message } = await produtoService.deletarProduto(1);
+
+      expect(type).to.be.equal(null);
+      expect(message).to.be.equal('');
+    });
+  });
 });
