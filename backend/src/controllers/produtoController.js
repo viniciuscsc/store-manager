@@ -1,7 +1,9 @@
 const produtoService = require('../services/produtoService');
 
 const erros = {
+  NAME_IS_REQUIRED: 400,
   NOT_FOUND: 404,
+  SMALL_NAME: 422,
 };
 
 const obterProdutos = async (_req, res) => {

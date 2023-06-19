@@ -1,4 +1,5 @@
 const produtoModel = require('../models/produtoModel');
+const { validarProduto } = require('./validations/validacaoValoresEntrada');
 
 const obterProdutos = async () => {
   const produtos = await produtoModel.obterProdutos();
@@ -15,6 +16,9 @@ const obterProdutoPorId = async (idProduto) => {
 };
 
 const cadastrarProduto = async (dadosProduto) => {
+  const produtoErro = validarProduto(dadosProduto);
+  if (produtoErro.type) return produtoErro;
+
   const idNovoProduto = await produtoModel.cadastrarProduto(dadosProduto);
   const { name } = dadosProduto;
 
