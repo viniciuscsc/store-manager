@@ -2,13 +2,13 @@ const { expect, use } = require('chai');
 const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 
-// const produtoModel = require('../../../src/models/produtoModel');
 const produtoService = require('../../../src/services/produtoService');
 const produtoController = require('../../../src/controllers/produtoController');
 
+const PRODUCT_NOT_FOUND = 'Product not found';
+
 const {
   produtosMock,
-  // produtoNaoEncontradoMock,
   novoProdutoMock,
 } = require('../mocks/produtoMocks');
 
@@ -50,13 +50,13 @@ describe('Testes de produtoController', function () {
         req.params = { id: 99 };
         sinon.stub(produtoService, 'obterProdutoPorId').resolves({
           type: 'NOT_FOUND',
-          message: 'Product not found',
+          message: PRODUCT_NOT_FOUND,
         });
 
         await produtoController.obterProdutoPorId(req, res);
 
         expect(res.status).to.be.calledWith(404);
-        expect(res.json).to.be.calledWith({ message: 'Product not found' });
+        expect(res.json).to.be.calledWith({ message: PRODUCT_NOT_FOUND });
       },
     );
 
@@ -130,13 +130,13 @@ describe('Testes de produtoController', function () {
       async function () {
         sinon.stub(produtoService, 'atualizarProduto').resolves({
           type: 'NOT_FOUND',
-          message: 'Product not found',
+          message: PRODUCT_NOT_FOUND,
         });
 
         await produtoController.atualizarProduto(req, res);
 
         expect(res.status).to.be.calledWith(404);
-        expect(res.json).to.be.calledWith({ message: 'Product not found' });
+        expect(res.json).to.be.calledWith({ message: PRODUCT_NOT_FOUND });
       },
     );
 
@@ -192,13 +192,13 @@ describe('Testes de produtoController', function () {
       async function () {
         sinon.stub(produtoService, 'deletarProduto').resolves({
           type: 'NOT_FOUND',
-          message: 'Product not found',
+          message: PRODUCT_NOT_FOUND,
         });
 
         await produtoController.deletarProduto(req, res);
 
         expect(res.status).to.be.calledWith(404);
-        expect(res.json).to.be.calledWith({ message: 'Product not found' });
+        expect(res.json).to.be.calledWith({ message: PRODUCT_NOT_FOUND });
       },
     );
 
