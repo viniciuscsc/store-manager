@@ -2,7 +2,6 @@ const { expect, use } = require('chai');
 const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
 
-// const connection = require('../../../src/models/connection');
 const produtoModel = require('../../../src/models/produtoModel');
 const produtoService = require('../../../src/services/produtoService');
 
