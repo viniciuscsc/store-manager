@@ -9,7 +9,7 @@ const produtoController = require('../../../src/controllers/produtoController');
 const {
   produtosMock,
   // produtoNaoEncontradoMock,
-  // novoProdutoMock,
+  novoProdutoMock,
 } = require('../mocks/produtoMocks');
 
 use(sinonChai);
@@ -75,5 +75,52 @@ describe('Testes de produtoController', function () {
         expect(res.json).to.be.calledWithExactly(produtosMock[0]);
       },
     );
+
+    describe('A função cadastrarProduto', function () {
+      it(
+        'retorna "name is required", com status code 400, se a requisição não tiver o campo "name"',
+        async function () {
+          sinon.stub(produtoService, 'cadastrarProduto').resolves({
+            type: 'VALUE_IS_REQUIRED',
+            message: '"name" is required',
+          });
+
+          await produtoController.cadastrarProduto(req, res);
+
+          expect(res.status).to.be.calledWith(400);
+          expect(res.json).to.be.calledWith({ message: '"name" is required' });
+        },
+      );
+
+      it(
+        `retorna "name length must be at least 5 characters long", com status code 422, se a 
+        requisição não tiver "name" com pelo menos 5 caracteres`,
+        async function () {
+          sinon.stub(produtoService, 'cadastrarProduto').resolves({
+            type: 'SMALL_VALUE',
+            message: '"name" length must be at least 5 characters long',
+          });
+
+          await produtoController.cadastrarProduto(req, res);
+
+          expect(res.status).to.be.calledWith(422);
+          expect(res.json).to.be.calledWith({
+            message: '"name" length must be at least 5 characters long',
+          });
+        },
+      );
+
+      it('retorna o produto cadastrado, com status code 201', async function () {
+        sinon.stub(produtoService, 'cadastrarProduto').resolves({
+          type: null,
+          message: { id: 4, name: novoProdutoMock.name },
+        });
+
+        await produtoController.cadastrarProduto(req, res);
+
+        expect(res.status).to.be.calledWith(201);
+        expect(res.json).to.be.calledWithExactly({ id: 4, name: novoProdutoMock.name });
+      });
+    });
   });
 });
