@@ -113,6 +113,19 @@ describe('Testes de produtoService', function () {
       expect(message).to.be.equal('"name" is required');
     });
 
+    it(
+      `retorna "name length must be at least 5 characters long" se a requisição não 
+      tiver "name" com pelo menos 5 caracteres`,
+      async function () {
+        const produtoNameCurto = { name: 'abc' };
+
+        const { type, message } = await produtoService.cadastrarProduto(produtoNameCurto);
+
+        expect(type).to.be.equal('SMALL_VALUE');
+        expect(message).to.be.equal('"name" length must be at least 5 characters long');
+      },
+    );
+
     it('retorna o produto atualizado', async function () {
       sinon.stub(produtoModel, 'obterProdutoPorId').resolves(produtosMock[0]);
       sinon.stub(produtoModel, 'atualizarProduto').resolves();

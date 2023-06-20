@@ -75,52 +75,140 @@ describe('Testes de produtoController', function () {
         expect(res.json).to.be.calledWithExactly(produtosMock[0]);
       },
     );
+  });
 
-    describe('A função cadastrarProduto', function () {
-      it(
-        'retorna "name is required", com status code 400, se a requisição não tiver o campo "name"',
-        async function () {
-          sinon.stub(produtoService, 'cadastrarProduto').resolves({
-            type: 'VALUE_IS_REQUIRED',
-            message: '"name" is required',
-          });
-
-          await produtoController.cadastrarProduto(req, res);
-
-          expect(res.status).to.be.calledWith(400);
-          expect(res.json).to.be.calledWith({ message: '"name" is required' });
-        },
-      );
-
-      it(
-        `retorna "name length must be at least 5 characters long", com status code 422, se a 
-        requisição não tiver "name" com pelo menos 5 caracteres`,
-        async function () {
-          sinon.stub(produtoService, 'cadastrarProduto').resolves({
-            type: 'SMALL_VALUE',
-            message: '"name" length must be at least 5 characters long',
-          });
-
-          await produtoController.cadastrarProduto(req, res);
-
-          expect(res.status).to.be.calledWith(422);
-          expect(res.json).to.be.calledWith({
-            message: '"name" length must be at least 5 characters long',
-          });
-        },
-      );
-
-      it('retorna o produto cadastrado, com status code 201', async function () {
+  describe('A função cadastrarProduto', function () {
+    it(
+      'retorna "name is required", com status code 400, se a requisição não tiver o campo "name"',
+      async function () {
         sinon.stub(produtoService, 'cadastrarProduto').resolves({
-          type: null,
-          message: { id: 4, name: novoProdutoMock.name },
+          type: 'VALUE_IS_REQUIRED',
+          message: '"name" is required',
         });
 
         await produtoController.cadastrarProduto(req, res);
 
-        expect(res.status).to.be.calledWith(201);
-        expect(res.json).to.be.calledWithExactly({ id: 4, name: novoProdutoMock.name });
+        expect(res.status).to.be.calledWith(400);
+        expect(res.json).to.be.calledWith({ message: '"name" is required' });
+      },
+    );
+
+    it(
+      `retorna "name length must be at least 5 characters long", com status code 422, se a 
+      requisição não tiver "name" com pelo menos 5 caracteres`,
+      async function () {
+        sinon.stub(produtoService, 'cadastrarProduto').resolves({
+          type: 'SMALL_VALUE',
+          message: '"name" length must be at least 5 characters long',
+        });
+
+        await produtoController.cadastrarProduto(req, res);
+
+        expect(res.status).to.be.calledWith(422);
+        expect(res.json).to.be.calledWith({
+          message: '"name" length must be at least 5 characters long',
+        });
+      },
+    );
+
+    it('retorna o produto cadastrado, com status code 201', async function () {
+      sinon.stub(produtoService, 'cadastrarProduto').resolves({
+        type: null,
+        message: { id: 4, name: novoProdutoMock.name },
       });
+
+      await produtoController.cadastrarProduto(req, res);
+
+      expect(res.status).to.be.calledWith(201);
+      expect(res.json).to.be.calledWithExactly({ id: 4, name: novoProdutoMock.name });
+    });
+  });
+
+  describe('A função atualizarProduto', function () {
+    it(
+      'retorna "Product not found", com status code 404, se o id informado não existe no database',
+      async function () {
+        sinon.stub(produtoService, 'atualizarProduto').resolves({
+          type: 'NOT_FOUND',
+          message: 'Product not found',
+        });
+
+        await produtoController.atualizarProduto(req, res);
+
+        expect(res.status).to.be.calledWith(404);
+        expect(res.json).to.be.calledWith({ message: 'Product not found' });
+      },
+    );
+
+    it(
+      'retorna "name is required", com status code 400, se a requisição não tiver o campo "name"',
+      async function () {
+        sinon.stub(produtoService, 'atualizarProduto').resolves({
+          type: 'VALUE_IS_REQUIRED',
+          message: '"name" is required',
+        });
+
+        await produtoController.atualizarProduto(req, res);
+
+        expect(res.status).to.be.calledWith(400);
+        expect(res.json).to.be.calledWith({ message: '"name" is required' });
+      },
+    );
+
+    it(
+      `retorna "name length must be at least 5 characters long", com status code 422, se a 
+      requisição não tiver "name" com pelo menos 5 caracteres`,
+      async function () {
+        sinon.stub(produtoService, 'atualizarProduto').resolves({
+          type: 'SMALL_VALUE',
+          message: '"name" length must be at least 5 characters long',
+        });
+
+        await produtoController.atualizarProduto(req, res);
+
+        expect(res.status).to.be.calledWith(422);
+        expect(res.json).to.be.calledWith({
+          message: '"name" length must be at least 5 characters long',
+        });
+      },
+    );
+
+    it('retorna o produto atualizado, com status code 200', async function () {
+      sinon.stub(produtoService, 'atualizarProduto').resolves({
+        type: null,
+        message: { id: 1, name: novoProdutoMock.name }, 
+      });
+
+      await produtoController.atualizarProduto(req, res);
+
+      expect(res.status).to.be.calledWith(200);
+      expect(res.json).to.be.calledWithExactly({ id: 1, name: novoProdutoMock.name });
+    });
+  });
+
+  describe('A função deletarProduto', function () {
+    it(
+      'retorna "Product not found", com status code 404, se o id informado não existe no database',
+      async function () {
+        sinon.stub(produtoService, 'deletarProduto').resolves({
+          type: 'NOT_FOUND',
+          message: 'Product not found',
+        });
+
+        await produtoController.deletarProduto(req, res);
+
+        expect(res.status).to.be.calledWith(404);
+        expect(res.json).to.be.calledWith({ message: 'Product not found' });
+      },
+    );
+
+    it('retorna o status code 204 e finaliza a resposta', async function () {
+      sinon.stub(produtoService, 'deletarProduto').resolves({ type: null, message: '' });
+
+      await produtoController.deletarProduto(req, res);
+
+      expect(res.status).to.be.calledWith(204);
+      expect(res.end).to.be.calledOnceWith();
     });
   });
 });
