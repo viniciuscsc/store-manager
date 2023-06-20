@@ -49,6 +49,13 @@ const vendaProductIdNaoExisteMock = [
   { productId: 2, quantity: 5 },
 ];
 
+const itemVendidoAtualizadoMock = {
+  date: '2023-06-20T02:27:09.000Z',
+  productId: 1,
+  quantity: 20,
+  saleId: 1,
+};
+
 module.exports = {
   vendasMock,
   dadosVendaMock,
@@ -57,4 +64,5 @@ module.exports = {
   vendaProductIdZeroMock,
   vendaQuantityZeroMock,
   vendaProductIdNaoExisteMock,
+  itemVendidoAtualizadoMock,
 };
