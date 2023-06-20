@@ -58,4 +58,15 @@ describe('Testes de vendaModel', function () {
 
     expect(dataVenda).to.be.equal(vendasMock[0].date);
   });
+
+  it(
+    'A função deletarVenda deleta a venda do database correspondente ao id informado',
+    async function () {
+      sinon.stub(connection, 'execute').resolves();
+
+      await vendaModel.deletarVenda(1);
+
+      expect(connection.execute).to.be.callCount(2);
+    },
+  );
 });
