@@ -24,7 +24,37 @@ const dadosVendaMock = [
   { productId: 2, quantity: 5 },
 ];
 
+const vendaSemProductIdMock = [
+  { quantity: 1 },
+  { productId: 2, quantity: 5 },
+];
+
+const vendaSemQuantitydMock = [
+  { productId: 1 },
+  { productId: 2, quantity: 5 },
+];
+
+const vendaProductIdZeroMock = [
+  { productId: 0, quantity: 1 },
+  { productId: 2, quantity: 5 },
+];
+
+const vendaQuantityZeroMock = [
+  { productId: 1, quantity: 0 },
+  { productId: 2, quantity: 5 },
+];
+
+const vendaProductIdNaoExisteMock = [
+  { productId: 99, quantity: 1 },
+  { productId: 2, quantity: 5 },
+];
+
 module.exports = {
   vendasMock,
   dadosVendaMock,
+  vendaSemProductIdMock,
+  vendaSemQuantitydMock,
+  vendaProductIdZeroMock,
+  vendaQuantityZeroMock,
+  vendaProductIdNaoExisteMock,
 };
